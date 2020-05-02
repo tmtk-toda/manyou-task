@@ -24,7 +24,7 @@ RSpec.describe 'タスク管理機能', type: :system do
       # 「タスク名」というラベル名の入力欄と、「タスク詳細」というラベル名の入力欄に
       # タスクのタイトルと内容をそれぞれfill_in（入力）する
       # 2.ここに「タスク名」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
-      fill_in "task_name",　with: task.name
+      fill_in "task_name", with: task.name
       # 3.ここに「タスク詳細」というラベル名の入力欄に内容をfill_in（入力）する処理を書く
       fill_in "task_detail", with: task.detail
       # 「登録する」というvalue（表記文字）のあるボタンをclick_onする（クリックする）
@@ -33,15 +33,17 @@ RSpec.describe 'タスク管理機能', type: :system do
       # clickで登録されたはずの情報が、タスク詳細ページに表示されているかを確認する
       # （タスクが登録されたらタスク詳細画面に遷移されるという前提）
       # 5.タスク詳細ページに、テストコードで作成したはずのデータ（記述）がhave_contentされているか（含まれているか）を確認（期待）するコードを書く
-      visit show_task_path
-      expect(page).to have_content 'ラベル名', 'タスク詳細'
+      expect(page).to have_content 'task'
       end
     end
   end
   describe 'タスク詳細画面' do
      context '任意のタスク詳細画面に遷移した場合' do
-       it '該当タスクの内容が表示されたページに遷移する'
+       it '該当タスクの内容が表示されたページに遷移する' do
+         visit @show_task_path
+
      end
+  end
   end
 end
 end
