@@ -16,12 +16,12 @@
 
   【デプロイ手順】
   
-  ●ローカルでマスターブランチに移動 
+  ●ローカルでマスターブランチに移動
     $ git checkout master
   ●マスターブランチで開発中ブランチをマージする
     $ git merge 開発ブランチ名
   ●Herokuにログインする
-    $ heroku login 
+    $ heroku login
   ●Herokuアプリ作成
     $ heroku create
   ●app/assetsディレクトリの中のファイルのうち、.jsと.cssファイル以外の全てのファイルをプリコンパイル
