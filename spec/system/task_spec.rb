@@ -41,7 +41,7 @@ RSpec.describe 'タスク管理機能', type: :system do
      context '任意のタスク詳細画面に遷移した場合' do
        it '該当タスクの内容が表示されたページに遷移する' do
          visit @show_task_path
-
+         redirect_to @show_task
      end
   end
   end
