@@ -26,6 +26,12 @@
     <%= form.date_field :deadline %>
   </div>
 
+  <div class="field">
+    <%= form.label :completed %>
+    <%= form.select :completed, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]], include_blank: "選択して下さい" %>
+  </div>
+
+
   <div class="actions">
     <%= form.submit %>
   </div>
