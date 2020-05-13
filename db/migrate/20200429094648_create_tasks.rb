@@ -4,6 +4,8 @@ class CreateTasks < ActiveRecord::Migration[5.2]
       t.string :name, null: false
       t.text :detail, null: false
       t.datetime :deadline, null: false
+      t.integer :completed, null: false
+      t.integer :priority, null: false
       
       t.timestamps
     end
