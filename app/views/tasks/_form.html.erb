@@ -28,7 +28,7 @@
 
   <div class="field">
     <%= form.label :completed %>
-    <%= form.select :completed, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]], include_blank: "選択して下さい" %>
+    <%= form.select :completed, [["未着手", 0], ["着手中", 1], ["完了", 2]], include_blank: "選択して下さい" %>
   </div>
 
 
