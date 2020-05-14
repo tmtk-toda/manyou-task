@@ -31,4 +31,20 @@ RSpec.describe 'タスク管理機能', type: :system do
       expect(task).to be_valid
     end
   end
+
+  context 'scopeメソッドで検索をした場合' do
+    before do
+      Task.create(name: "task", detail: "sample_task")
+      Task.create(name: "sample", detail: "sample_sample")
+    end
+    it "scopeメソッドでタイトル検索ができる" do
+      expect(Task.get_by_taskname('task').count).to eq 1
+    end
+    it "scopeメソッドでステータス検索ができる" do
+      # ここに内容を記載する
+    end
+    it "scopeメソッドでタイトルとステータスの両方が検索できる" do
+      # ここに内容を記載する
+    end
+  end
    
