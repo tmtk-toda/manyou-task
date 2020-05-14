@@ -4,10 +4,17 @@ class TasksController < ApplicationController
   # GET /tasks
   # GET /tasks.json
   def index
-    if params[:sort_expired]
-    @tasks = Task.all.order(deadline: :desc)
+    #キーワードが入力されていれば、whereメソッドとLIKE検索（部分一致検索）を組み合わせて、必要な情報のみ取得する。
+    if params[:name_key]
+      @tasks = Task.where('name LIKE ?', "%#{params[:name_key]}%")
+      @tasks = @tasks.where(completed: params[:completed])
+
+    elsif params[:sort_expired]  
+      @tasks = Task.all.order(deadline: :desc)
+    elsif params[:sort_priority] 
+      @tasks = Task.all.order(priority: :desc)
     else
-    @tasks = Task.all.order(created_at: :desc)
+      @tasks = Task.all.order(created_at: :desc)
     end
   end
 
@@ -28,6 +35,7 @@ class TasksController < ApplicationController
   # POST /tasks
   # POST /tasks.json
   def create
+    # binding.irb
     @task = Task.new(task_params)
 
     respond_to do |format|

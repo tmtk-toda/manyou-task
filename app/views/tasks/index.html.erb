@@ -1,6 +1,18 @@
 
 <h1>Tasks</h1>
 
+
+<%= form_with url:'/tasks', method: :get, local: true do |f| %>
+  <%= f.label :name_key, 'Search name' %>
+  <%= f.text_field :name_key %>
+  <%= f.label :completed %>
+  <%= f.select :completed, [["未着手", "未着手"], ["着手中", "着手中"], ["完了", "完了"]], include_blank: "選択して下さい" %>
+  <%= f.submit 'Search' %> <%= link_to 'Clear', tasks_path %>
+<% end %>
+
+<%= link_to "終了期限迫ってる順", tasks_path(sort_expired: "true") %>
+<%= link_to "優先順位高い順", tasks_path(sort_priority: "true") %>
+
 <table>
   <thead>
     <tr>
@@ -31,7 +43,6 @@
         <td><%= link_to 'Destroy', task, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
-    <%= link_to "終了期限でソートする", tasks_path(sort_expired: "true") %>
   </tbody>
 </table>
 
