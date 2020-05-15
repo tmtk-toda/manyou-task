@@ -13,7 +13,7 @@
 <%= link_to "終了期限迫ってる順", tasks_path(sort_expired: "true") %>
 <%= link_to "優先順位高い順", tasks_path(sort_priority: "true") %>
 
-<table>
+<table class="table">
   <thead>
     <tr>
       <th>Name</th>
@@ -48,5 +48,5 @@
 </table>
 <br>
 
-<%= link_to 'New Task', new_task_path %>
+<%= link_to 'New Task', new_task_path, class:"btn btn-primary"  %>
 <%= paginate @tasks %>
