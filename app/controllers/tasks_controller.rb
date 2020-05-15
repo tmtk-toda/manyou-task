@@ -6,16 +6,19 @@ class TasksController < ApplicationController
   def index
     #キーワードが入力されていれば、whereメソッドとLIKE検索（部分一致検索）を組み合わせて、必要な情報のみ取得する。
     if params[:name_key]
-      @tasks = Task.where('name LIKE ?', "%#{params[:name_key]}%")
-      @tasks = @tasks.where(completed: params[:completed])
-
+      @tasks = Task.where('name LIKE ?', "%#{params[:name_key]}%").page(params[:page]).per(5)
+      if params[:completed].present?
+      @tasks = Task.where('name LIKE ?', "%#{params[:name_key]}%").where(completed: params[:completed]).page(params[:page]).per(5)
+      end
+      elsif params[:completed].present?
+        @tasks = Task.where(completed: params[:completed]).page(params[:page]).per(5)
     elsif params[:sort_expired]  
-      @tasks = Task.all.order(deadline: :desc)
+      @tasks = Task.all.order(deadline: :desc).page(params[:page]).per(5)
     elsif params[:sort_priority] 
-      @tasks = Task.all.order(priority: :desc)
+      @tasks = Task.all.order(priority: :desc).page(params[:page]).per(5)
     else
-      @tasks = Task.all.order(created_at: :desc)
-      @tasks = Task.page(params[:page]).per(10)
+      @tasks = Task.all.order(created_at: :desc).page(params[:page]).per(5)
+      # @tasks = Task.page(params[:page]).per(10)
     end
   end
 

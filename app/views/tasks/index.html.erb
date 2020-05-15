@@ -44,9 +44,9 @@
       </tr>
       
     <% end %>
-    <%= paginate @tasks %>
   </tbody>
 </table>
 <br>
 
 <%= link_to 'New Task', new_task_path %>
+<%= paginate @tasks %>
