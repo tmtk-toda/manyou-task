@@ -22,29 +22,46 @@ RSpec.describe 'タスク管理機能', type: :system do
   end  
     it 'contentが空ならバリデーションが通らない' do
       # ここに内容を記載する
-      task = Task.new(name: '失敗テスと', detail: '')
+      task = Task.new(name: '失敗テスト', detail: '')
       expect(task).not_to be_valid
     end
     it 'nameとcontentに内容が記載されていればバリデーションが通る' do
       # ここに内容を記載する
-      task = Task.new(name: '成功テスト', detail: '成功テスト')
+      task = Task.new(name: '成功テスト', detail: '成功テスト', deadline: "2000-1-1", completed: '未着手' , priority: '低')
       expect(task).to be_valid
     end
-  end
+  
 
   context 'scopeメソッドで検索をした場合' do
     before do
-      Task.create(name: "task", detail: "sample_task")
-      Task.create(name: "sample", detail: "sample_sample")
+    FactoryBot.create(:task)
+    FactoryBot.create(:second_task)
+    FactoryBot.create(:task, name: '付け加えた名前１')
+    FactoryBot.create(:task, name: '付け加えた名前２')
+    FactoryBot.create(:second_task, name: '付け加えた名前３', detail: '付け加えたコンテント')
+    visit @index_task_path
     end
     it "scopeメソッドでタイトル検索ができる" do
-      expect(Task.get_by_taskname('task').count).to eq 1
+      fill_in 'Search_name', with: '付け加えた名前１'
+      click_on 'Search' 
+      expect(page).to have_content '付け加えた名前１'
     end
     it "scopeメソッドでステータス検索ができる" do
       # ここに内容を記載する
+      select '未着手', from: 'completed'
+      click_on 'Search' 
+      expect(page).to have_no_content '付け加えた名前３'
+      
     end
     it "scopeメソッドでタイトルとステータスの両方が検索できる" do
       # ここに内容を記載する
+      fill_in 'Search_name', with: '付け加えた名前１'
+      select '未着手', from: 'completed'
+      click_on 'Search'
+      expect(page).to have_content '付け加えた名前１'
+      expect(page).to have_no_content '付け加えた名前３'
+
     end
   end
+end 
    

@@ -10,7 +10,7 @@ class TasksController < ApplicationController
       if params[:completed].present?
       @tasks = Task.where('name LIKE ?', "%#{params[:name_key]}%").where(completed: params[:completed]).page(params[:page]).per(5)
       end
-      elsif params[:completed].present?
+    elsif params[:completed].present?
         @tasks = Task.where(completed: params[:completed]).page(params[:page]).per(5)
     elsif params[:sort_expired]  
       @tasks = Task.all.order(deadline: :desc).page(params[:page]).per(5)
