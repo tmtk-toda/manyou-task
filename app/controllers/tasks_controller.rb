@@ -41,6 +41,7 @@ class TasksController < ApplicationController
   def create
     # binding.irb
     @task = Task.new(task_params)
+    @task = current_user.tasks.build(task_params)
 
     respond_to do |format|
       if @task.save
