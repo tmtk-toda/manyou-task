@@ -1,0 +1,21 @@
+<p>
+  <%= "名前" %>:<%= @user.name %>
+</p>
+<p><%= "メール" %>:<%= @user.email %>
+</p>
+<p>
+  <br>
+  <table align="center">
+    <tr>
+      <th><%= "名前" %></th>
+      <th><%= "コンテント" %></th>
+    </tr>
+    <% @tasks.each do |task| %>
+      <tr class = "task_row">
+        <td><%= task.name %></td>
+        <td><%= task.detail %></td>
+      </tr>
+    <% end %>
+  </table>
+</p>
+<%= link_to "管理画面へ", admin_users_path %>

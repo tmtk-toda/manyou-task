@@ -6,4 +6,10 @@ class User < ApplicationRecord
   has_secure_password
   validates :password, presence: true, length: { minimum: 6 }
   has_many :tasks
+  before_destroy :do_not_destroy_last_admin
+  private
+  def do_not_destroy_last_admin
+    # コールバックで処理を停止したい時は、throw :abortする。selfをつけ、クラスメソッドを定義する。
+    throw(:abort) if User.where(admin: true).count <= 1 && self.admin?
+  end
 end
