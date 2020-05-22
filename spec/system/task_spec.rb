@@ -28,5 +28,27 @@ RSpec.describe 'タスク管理機能', type: :system do
         expect(task_list[1]).to have_content '付け加えた名前２'
       end
     end
+    context 'labelの全て検索をした場合' do
+      it 'らべるの絞り込み検索ができる' do
+        fill_in 'sample from Lavel
+        click_on 'Search'
+        expect(page).to have_content '付け加えた名前１','未着手','sample'
+      end
+    end
+  end
   end
 end   
+
+
+
+  describe 'タスク一覧画面' do
+    context 'name、completed、labelの全て検索をした場合' do
+      it '全ての絞り込み検索ができる' do
+        fill_in 'Search_name', with: '付け加えた名前１'
+        select '未着手', from: 'Completed'
+        fill_in 'sample from Lavel
+        click_on 'Search'
+        expect(page).to have_content '付け加えた名前１','未着手','sample'
+      end
+    end
+  end
