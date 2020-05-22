@@ -6,27 +6,40 @@ class TasksController < ApplicationController
   # GET /tasks.json
   def index
     #キーワードが入力されていれば、whereメソッドとLIKE検索（部分一致検索）を組み合わせて、必要な情報のみ取得する。
-    if params[:name_key].present?
-       @tasks = Task.where('name LIKE ?', "%#{params[:name_key]}%").page(params[:page]).per(5)
-      if params[:completed].present?
-       @tasks = Task.where('name LIKE ?', "%#{params[:name_key]}%").where(completed: params[:completed]).page(params[:page]).per(5)
-      # else params[:label].present?
-      #  @tasks = Task.where('name LIKE ?', "%#{params[:name_key]}%").where(completed: params[:completed]).where('label LIKE ?', "%#{params[:label]}%").page(params[:page]).per(5)
-      end
-    elsif params[:completed].present?
-        @tasks = Task.where(completed: params[:completed]).page(params[:page]).per(5)
-    elsif params[:label].present?
-      binding.irb
-      @tasks = Task.search_label(params[:label]).page(params[:page]).per(5)
-    elsif params[:sort_expired] 
-      @tasks = Task.all.order(deadline: :desc).page(params[:page]).per(5)
+    @tasks = current_user.tasks.search_name(params[:name_key]).search_completed(params[:completed]).search_label(params[:label]).page(params[:page]).per(5)
+    if params[:sort_expired] 
+      @tasks = current_user.tasks.order(deadline: :desc).page(params[:page]).per(5)
     elsif params[:sort_priority] 
-      @tasks = Task.all.order(priority: :desc).page(params[:page]).per(5)
-    else
-      @tasks = Task.all.order(created_at: :desc).page(params[:page]).per(5)
-      # @tasks = Task.page(params[:page]).per(10)
-    end
+      @tasks = current_user.tasks.order(priority: :desc).page(params[:page]).per(5)
+    end  
   end
+  
+  #   if params[:name_key].present?
+  #     if params[:completed].present? && params[:label].nil?
+  #      @tasks = Task.where('name LIKE ?', "%#{params[:name_key]}%").where(completed: params[:completed]).page(params[:page]).per(5)
+  #     elsif params[:completed].nil? && params[:label].present?
+  #      @tasks = Task.where('name LIKE ?', "%#{params[:name_key]}%").search_label(params[:label]).page(params[:page]).per(5)
+  #     elsif params[:label].present? && params[:completed].present?
+  #      @tasks = Task.where('name LIKE ?', "%#{params[:name_key]}%").where(completed: params[:completed]).search_label(params[:label]).page(params[:page]).per(5)
+  #     else params[:completed].nil? && params[:label].nil?
+  #       @tasks = Task.where('name LIKE ?', "%#{params[:name_key]}%").page(params[:page]).per(5)
+  #     end
+  #   elsif params[:name_key].nil?
+  #     if params[:completed].present? && params[:label].nil?
+  #       @tasks = Task.where(completed: params[:completed]).page(params[:page]).per(5)
+  #     else params[:completed].nil? && params[:label].present?
+  #       @tasks = Task.search_label(params[:label]).page(params[:page]).per(5)
+  #     end  
+  #   elsif params[:label].present?
+  #     @tasks = Task.search_label(params[:label]).page(params[:page]).per(5)
+    # elsif params[:sort_expired] 
+    #   @tasks = Task.all.order(deadline: :desc).page(params[:page]).per(5)
+    # elsif params[:sort_priority] 
+    #   @tasks = Task.all.order(priority: :desc).page(params[:page]).per(5)
+  #   else params[:name_key].nil? && params[:label].nil? && params[:completed].nil?
+  #     @tasks = Task.all.order(created_at: :desc).page(params[:page]).per(5)
+  #   end
+  # end
 
   # GET /tasks/1
   # GET /tasks/1.json
