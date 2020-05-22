@@ -21,6 +21,12 @@ module ManyouTask
         request_specs: false
       g.fixture_replacement :factory_bot, dir: "spec/factories"
     end
+    # scaffoldで無駄なファイルが生成されないよう設定
+    config.generators do |g|
+      g.javascripts false
+      g.helper false
+      g.test_framework false
+    end 
   end
 
     # Settings in config/environments/* take precedence over those specified here.

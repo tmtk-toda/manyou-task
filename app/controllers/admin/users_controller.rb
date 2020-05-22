@@ -38,7 +38,7 @@ class Admin::UsersController < ApplicationController
   private
   def admin_user
     if not current_user.admin
-      flash[:notice] = t('notice.not_administrator')
+      flash[:notice] = ('権限はありません')
       redirect_to(root_path)
     end
   end

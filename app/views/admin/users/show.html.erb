@@ -7,13 +7,20 @@
   <br>
   <table align="center">
     <tr>
-      <th><%= "名前" %></th>
-      <th><%= "コンテント" %></th>
+    
+      <th>Name</th>
+      <th>Detail</th>
+      <th>Deadline</th>
+      <th>Completed</th>
+      <th>Priority</th>
     </tr>
     <% @tasks.each do |task| %>
       <tr class = "task_row">
         <td><%= task.name %></td>
         <td><%= task.detail %></td>
+        <td><%= task.deadline %></td>
+        <td><%= task.completed %></td>
+        <td><%= task.priority %></td>
       </tr>
     <% end %>
   </table>

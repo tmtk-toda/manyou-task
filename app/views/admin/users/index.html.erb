@@ -2,7 +2,7 @@
 <%= link_to "ユーザー作成へ", new_admin_user_path %>
 <% @users.each do |user| %>
   <%= user.id %>: <%= user.name %>
-  <%= user.tasks.count %>
+  <%= "タスクの数" %>:<%= user.tasks.count %>
   <%= link_to "詳細", admin_user_path(user.id) %>
   <%= link_to "編集" , edit_admin_user_path(user.id), class: "user_edit" %>
   <%= link_to "削除", [:admin, user], method: :delete,

@@ -6,14 +6,19 @@ class TasksController < ApplicationController
   # GET /tasks.json
   def index
     #キーワードが入力されていれば、whereメソッドとLIKE検索（部分一致検索）を組み合わせて、必要な情報のみ取得する。
-    if params[:name_key]
-      @tasks = Task.where('name LIKE ?', "%#{params[:name_key]}%").page(params[:page]).per(5)
+    if params[:name_key].present?
+       @tasks = Task.where('name LIKE ?', "%#{params[:name_key]}%").page(params[:page]).per(5)
       if params[:completed].present?
-      @tasks = Task.where('name LIKE ?', "%#{params[:name_key]}%").where(completed: params[:completed]).page(params[:page]).per(5)
+       @tasks = Task.where('name LIKE ?', "%#{params[:name_key]}%").where(completed: params[:completed]).page(params[:page]).per(5)
+      # else params[:label].present?
+      #  @tasks = Task.where('name LIKE ?', "%#{params[:name_key]}%").where(completed: params[:completed]).where('label LIKE ?', "%#{params[:label]}%").page(params[:page]).per(5)
       end
     elsif params[:completed].present?
         @tasks = Task.where(completed: params[:completed]).page(params[:page]).per(5)
-    elsif params[:sort_expired]  
+    elsif params[:label].present?
+      binding.irb
+      @tasks = Task.search_label(params[:label]).page(params[:page]).per(5)
+    elsif params[:sort_expired] 
       @tasks = Task.all.order(deadline: :desc).page(params[:page]).per(5)
     elsif params[:sort_priority] 
       @tasks = Task.all.order(priority: :desc).page(params[:page]).per(5)
@@ -26,6 +31,7 @@ class TasksController < ApplicationController
   # GET /tasks/1
   # GET /tasks/1.json
   def show
+    @task = Task.find(params[:id])
   end
 
   # GET /tasks/new
@@ -87,6 +93,6 @@ class TasksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def task_params
-      params.require(:task).permit(:name, :detail, :deadline, :completed, :priority)
+      params.require(:task).permit(:name, :detail, :deadline, :completed, :priority,  label_ids: [])
     end
 end
