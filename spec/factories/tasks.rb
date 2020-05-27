@@ -8,6 +8,7 @@ FactoryBot.define do
     deadline { "2000-1-1"}
     completed {0}
     priority {0}
+    
   end
   # 作成するテストデータの名前を「second_task」とします
   # （存在しないクラス名の名前をつける場合、オプションで「このクラスのテストデータにしてください」と指定します）
@@ -17,6 +18,6 @@ FactoryBot.define do
     deadline { "2100-1-1"}
     completed {1}
     priority {1}
-
+    
   end
 end
