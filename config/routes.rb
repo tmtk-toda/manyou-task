@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :labels
   get 'sessions/new'
   resources :tasks
-  root :to => 'tasks#index'
+  root :to => 'sessions#new'
   resources :users, only: [:new, :create, :show]
   resources :sessions, only: [:new, :create, :destroy]
   namespace :admin do
