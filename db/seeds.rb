@@ -13,3 +13,10 @@
 5.times do |i|
    lavels = Label.create!(title: "sample#{i + 1}")
  end
+
+ 
+ User.create!(username:  "管理者",
+ email: "admin@example.jp",
+ password:  "111111",
+ password_confirmation: "111111",
+ admin: true)
