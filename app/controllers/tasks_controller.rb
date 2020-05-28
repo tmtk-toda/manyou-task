@@ -6,13 +6,14 @@ class TasksController < ApplicationController
   # GET /tasks.json
   def index
     #キーワードが入力されていれば、whereメソッドとLIKE検索（部分一致検索）を組み合わせて、必要な情報のみ取得する。
-    @tasks = current_user.tasks.search_name(params[:name_key]).search_completed(params[:completed]).search_label(params[:label]).page(params[:page]).per(5)
+    @tasks = current_user.tasks.includes(:labels).search_name(params[:name_key]).search_completed(params[:completed]).search_label(params[:label]).page(params[:page]).per(5)
     if params[:sort_expired] 
       @tasks = current_user.tasks.order(deadline: :desc).page(params[:page]).per(5)
     elsif params[:sort_priority] 
       @tasks = current_user.tasks.order(priority: :desc).page(params[:page]).per(5)
     end  
   end
+  
   
   #   if params[:name_key].present?
   #     if params[:completed].present? && params[:label].nil?
