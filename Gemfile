@@ -70,5 +70,5 @@ gem 'kaminari'
 gem 'bootstrap', '~> 4.1.1'
 gem 'jquery-rails'
 gem "sass-rails", "~>5.0"
-gem "bootstrap-sass", "~>3.3.6"
+gem "bootstrap-sass", "~>3.4.1"
 gem "jquery-ui-rails"
